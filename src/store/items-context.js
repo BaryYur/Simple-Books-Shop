@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 
 const BookItemsContext = React.createContext({
     isLoggedIn: false,
-    bookItems: []
+    bookItems: [],
+    scienceBooks: [],
+    adventureBooks: []
 })
 
 export const BookItemsContextProvider = (props) => {

@@ -21,15 +21,14 @@ const MainNavigation = () => {
 
     useEffect(() => {
         let searchingItems = [];
-        let searchingInfo = [];
 
-        booksCtx.bookItems.map(item => {
+        for (let item of booksCtx.bookItems) {
             if (item.volumeInfo.title.toLowerCase().includes(JSON.parse(localStorage.getItem("searchingText")).toLowerCase())) {
                 searchingItems.push(item);
                 booksCtx.searchingBooks = searchingItems;
                 localStorage.setItem("searchingItems", JSON.stringify(searchingItems));
             }
-        });
+        };
 
         setSearchingInput(JSON.parse(localStorage.getItem("searchingInfo"))[0]);
     }, []);
