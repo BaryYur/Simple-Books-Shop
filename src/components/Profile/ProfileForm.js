@@ -1,8 +1,9 @@
-import { useRef, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRef, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
-import AuthContext from '../../store/auth-context';
-import classes from './ProfileForm.module.css';
+import AuthContext from "../../store/auth-context";
+import "./ProfileForm.css";
+import {TextField, Button} from "@mui/material";
 
 const ProfileForm = () => {
   const history = useNavigate();
@@ -15,8 +16,6 @@ const ProfileForm = () => {
 
     const enteredNewPassword = newPasswordInputRef.current.value;
 
-    // add validation
-
     fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBZhsabDexE9BhcJbGxnZ4DiRlrCN9xe24', {
       method: 'POST',
       body: JSON.stringify({
@@ -28,20 +27,26 @@ const ProfileForm = () => {
         'Content-Type': 'application/json'
       }
     }).then(res => {
-      // assumption: Always succeeds!
-
       history('/');
     });
   };
 
   return (
-    <form className={classes.form} onSubmit={submitHandler}>
-      <div className={classes.control}>
-        <label htmlFor='new-password'>New Password</label>
-        <input type='password' id='new-password' minLength="7" ref={newPasswordInputRef} />
+    <form className="user-form" onSubmit={submitHandler}>
+      <div className="control">
+        <label htmlFor="new-password" className="title-label">New Password</label>
+        <TextField
+            type="password"
+            id="new-password"
+            minLength="7"
+            ref={newPasswordInputRef}
+            label="Change password"
+            variant="outlined"
+            size="small"
+        />
       </div>
-      <div className={classes.action}>
-        <button>Change Password</button>
+      <div className="action">
+        <Button variant="contained">Change</Button>
       </div>
     </form>
   );

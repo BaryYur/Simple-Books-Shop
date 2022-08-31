@@ -1,0 +1,16 @@
+.books-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.adventure-books-container,
+.science-books-container {
+    padding-top: 120px;
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.adventure-books-container h2,
+.science-books-container h2 {
+    margin-bottom: 25px;
+}

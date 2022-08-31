@@ -1,45 +1,138 @@
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import {useContext, useEffect, useState} from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
-import AuthContext from '../../store/auth-context';
-import classes from './MainNavigation.module.css';
+import AuthContext from "../../store/auth-context";
+import "./MainNavigation.css";
+import ImportContactsOutlinedIcon from '@mui/icons-material/ImportContactsOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import { TextField } from "@mui/material";
+import { Button } from "@mui/material";
+import BookItemsContext from "../../store/items-context";
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 
 const MainNavigation = () => {
-  const authCtx = useContext(AuthContext);
+    const authCtx = useContext(AuthContext);
+    const booksCtx = useContext(BookItemsContext);
+    const navigate = useNavigate();
+    const [searchingInput, setSearchingInput] = useState("");
 
-  const isLoggedIn = authCtx.isLoggedIn;
+    const isLoggedIn = authCtx.isLoggedIn;
 
-  const logoutHandler = () => {
-    authCtx.logout();
-    // optional: redirect the user
-  };
+    useEffect(() => {
+        let searchingItems = [];
+        let searchingInfo = [];
 
-  return (
-    <header className={classes.header}>
-      <Link to='/'>
-        <div className={classes.logo}>React Auth</div>
-      </Link>
-      <nav>
-        <ul>
-          {!isLoggedIn && (
-            <li>
-              <Link to='/auth'>Login</Link>
-            </li>
-          )}
-          {isLoggedIn && (
-            <li>
-              <Link to='/profile'>Profile</Link>
-            </li>
-          )}
-          {isLoggedIn && (
-            <li>
-              <button onClick={logoutHandler}>Logout</button>
-            </li>
-          )}
-        </ul>
-      </nav>
-    </header>
-  );
+        booksCtx.bookItems.map(item => {
+            if (item.volumeInfo.title.toLowerCase().includes(JSON.parse(localStorage.getItem("searchingText")).toLowerCase())) {
+                searchingItems.push(item);
+                booksCtx.searchingBooks = searchingItems;
+                localStorage.setItem("searchingItems", JSON.stringify(searchingItems));
+            }
+        });
+
+        setSearchingInput(JSON.parse(localStorage.getItem("searchingInfo"))[0]);
+    }, []);
+
+    const searchingSubmitHandler = (event) => {
+        event.preventDefault();
+
+        let searchingItems = [];
+        let searchingInfo = [];
+        let booksCounter = 0;
+
+        if (searchingInput === "") return;
+
+        for (let item of booksCtx.bookItems) {
+            if (item.volumeInfo.title.toLowerCase().includes(searchingInput.toLowerCase())) {
+                searchingItems.push(item);
+                booksCounter++;
+                searchingInfo = [searchingInput, booksCounter];
+
+                booksCtx.searchingBooks = searchingItems;
+                localStorage.setItem("searchingInfo", JSON.stringify(searchingInfo));
+                localStorage.setItem("searchingItems", JSON.stringify(searchingItems));
+            }
+        }
+
+        navigate(`/search/?text=${searchingInput.toLowerCase()}`);
+    }
+
+    const resetSearching = () => {
+        setSearchingInput("");
+        let searchingInfo = ["", 0];
+        localStorage.setItem("searchingInfo", JSON.stringify(searchingInfo));
+    }
+
+    return (
+        <header className="header">
+            <div className="header-container">
+                <Link to='/' onClick={resetSearching}>
+                    <div className="logo-box">
+                        <ImportContactsOutlinedIcon color="primary" fontSize="large" />
+                        <span>Simple shop</span>
+                    </div>
+                </Link>
+                <div className="searching-box">
+                    <form onSubmit={searchingSubmitHandler} className="searching-form">
+                        <TextField
+                            label="Searching for book"
+                            variant="outlined"
+                            size="small"
+                            value={searchingInput}
+                            onChange={event => {
+                                setSearchingInput(event.target.value);
+                            }}
+                        />
+                        <Button type="submit" variant="contained">
+                            <SearchOutlinedIcon />
+                        </Button>
+                    </form>
+                </div>
+                <nav>
+                    <ul>
+                        <li>
+                            <NavLink
+                                style={({ isActive }) => {
+                                    return { boxShadow: isActive ? ' 0px 3px 0px 0px royalblue' : 'none'}
+                                }}
+                                to="/all-books"
+                                onClick={resetSearching}
+                            >All books</NavLink>
+                        </li>
+                        {!isLoggedIn && (
+                            <li>
+                                <NavLink
+                                    style={({ isActive }) => {
+                                        return { boxShadow: isActive ? ' 0px 3px 0px 0px royalblue' : 'none'}
+                                    }}
+                                    to="/auth"
+                                    onClick={resetSearching}
+                                >Login</NavLink>
+                            </li>
+                        )}
+                        {isLoggedIn && (
+                            <li>
+                                <NavLink
+                                    className="profile-link"
+                                    style={({ isActive }) => {
+                                        return { boxShadow: isActive ? ' 0px 3px 0px 0px royalblue' : 'none'}
+                                    }}
+                                    to="/profile"
+                                    onClick={resetSearching}
+                                >
+                                    <PersonOutlineOutlinedIcon />
+                                </NavLink>
+                            </li>
+                        )}
+                        <Button>
+                            <ShoppingCartOutlinedIcon />
+                        </Button>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+    );
 };
 
 export default MainNavigation;

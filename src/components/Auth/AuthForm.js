@@ -2,7 +2,7 @@ import { useState, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import AuthContext from '../../store/auth-context';
-import classes from './AuthForm.module.css';
+import './AuthForm.css';
 
 const AuthForm = () => {
   const history = useNavigate();
@@ -74,14 +74,14 @@ const AuthForm = () => {
   };
 
   return (
-    <section className={classes.auth}>
+    <section className="auth">
       <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
       <form onSubmit={submitHandler}>
-        <div className={classes.control}>
+        <div className="control">
           <label htmlFor='email'>Your Email</label>
           <input type='email' id='email' required ref={emailInputRef} />
         </div>
-        <div className={classes.control}>
+        <div className="control">
           <label htmlFor='password'>Your Password</label>
           <input
             type='password'
@@ -90,14 +90,14 @@ const AuthForm = () => {
             ref={passwordInputRef}
           />
         </div>
-        <div className={classes.actions}>
+        <div className="actions">
           {!isLoading && (
             <button>{isLogin ? 'Login' : 'Create Account'}</button>
           )}
           {isLoading && <p>Sending request...</p>}
           <button
-            type='button'
-            className={classes.toggle}
+            type="button"
+            className="toggle"
             onClick={switchAuthModeHandler}
           >
             {isLogin ? 'Create new account' : 'Login with existing account'}
