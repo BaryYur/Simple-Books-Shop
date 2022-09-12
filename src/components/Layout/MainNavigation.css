@@ -2,6 +2,7 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   padding: 8px 0;
   position: fixed;
+  z-index: 10;
   background-color: white;
   width: 100%;
 }
@@ -62,4 +63,15 @@ header a {
 
 header .profile-link {
   padding-bottom: 0;
+}
+
+header .header__cart-btn {
+  background-color: rgba(65, 105, 225, 0.13);
+}
+
+@media screen and (max-width: 1200px) {
+  .header-container {
+    width: 100%;
+    padding: 0 30px;
+  }
 }

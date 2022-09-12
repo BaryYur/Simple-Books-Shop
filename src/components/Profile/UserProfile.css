@@ -3,3 +3,10 @@
   width: 1200px;
   padding: 120px 0;
 }
+
+@media screen and (max-width: 1200px) {
+  .profile {
+    width: 100%;
+    padding: 120px 10px 30px 10px
+  }
+}

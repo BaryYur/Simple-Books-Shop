@@ -65,3 +65,14 @@ hr {
   margin-top: -5%;
   transition: all 0.15s ease-out;
 }
+
+@media screen and (max-width: 1200px) {
+  .starting-container {
+    width: 100%;
+    padding: 120px 10px;
+  }
+
+  hr {
+    width: 100%;
+  }
+}

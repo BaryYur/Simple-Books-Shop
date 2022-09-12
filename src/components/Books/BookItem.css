@@ -1,3 +1,7 @@
+.card-container {
+    position: relative;
+}
+
 .card-container img {
     height: 200px;
     width: 150px;
@@ -5,8 +9,29 @@
     margin: 0 auto 10px auto;
 }
 
+.card-container .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .card-container .card-title {
     text-align: center;
     font-size: 14px;
     font-weight: 600;
+    color: black;
+}
+
+.card-container__buttons-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-container__buttons-box button:first-child {
+    margin-right: 2px;
+}
+
+.card-container__buttons-box button:first-child:hover {
+    background-color: rgba(205, 92, 92, 0.11);
 }

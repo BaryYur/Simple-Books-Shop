@@ -15,6 +15,7 @@ const Books = () => {
                     id={item.id}
                     title={item.volumeInfo.title}
                     image={item.volumeInfo.imageLinks.thumbnail}
+                    price={item.saleInfo.retailPrice && item.saleInfo.retailPrice.amount}
                 />
             ))}
         </div>

@@ -19,25 +19,30 @@ const MainNavigation = () => {
 
     const isLoggedIn = authCtx.isLoggedIn;
 
-    useEffect(() => {
+    const updateSearching = () => {
         let searchingItems = [];
 
         for (let item of booksCtx.bookItems) {
-            if (item.volumeInfo.title.toLowerCase().includes(JSON.parse(localStorage.getItem("searchingText")).toLowerCase())) {
+            if (item.volumeInfo.title.toLowerCase().includes(JSON.parse(localStorage.getItem("searchingInfo"))[0].toLowerCase())) {
                 searchingItems.push(item);
-                booksCtx.searchingBooks = searchingItems;
-                localStorage.setItem("searchingItems", JSON.stringify(searchingItems));
             }
+
+            booksCtx.searchingBooks = searchingItems;
+            localStorage.setItem("searchingItems", JSON.stringify(searchingItems));
         };
 
         setSearchingInput(JSON.parse(localStorage.getItem("searchingInfo"))[0]);
+    }
+
+    useEffect(() => {
+        updateSearching();
     }, []);
 
     const searchingSubmitHandler = (event) => {
         event.preventDefault();
 
         let searchingItems = [];
-        let searchingInfo = [];
+        let searchingInfo = ["", 0];
         let booksCounter = 0;
 
         if (searchingInput === "") return;
@@ -46,13 +51,16 @@ const MainNavigation = () => {
             if (item.volumeInfo.title.toLowerCase().includes(searchingInput.toLowerCase())) {
                 searchingItems.push(item);
                 booksCounter++;
-                searchingInfo = [searchingInput, booksCounter];
-
-                booksCtx.searchingBooks = searchingItems;
-                localStorage.setItem("searchingInfo", JSON.stringify(searchingInfo));
-                localStorage.setItem("searchingItems", JSON.stringify(searchingItems));
+            } else {
+                localStorage.setItem("searchingInfo", JSON.stringify([searchingInput, booksCounter]));
+                localStorage.setItem("searchingItems", JSON.stringify([]));
             }
         }
+
+        searchingInfo = [searchingInput, booksCounter];
+        booksCtx.searchingBooks = searchingItems;
+        localStorage.setItem("searchingInfo", JSON.stringify(searchingInfo));
+        localStorage.setItem("searchingItems", JSON.stringify(searchingItems));
 
         navigate(`/search/?text=${searchingInput.toLowerCase()}`);
     }
@@ -93,7 +101,7 @@ const MainNavigation = () => {
                         <li>
                             <NavLink
                                 style={({ isActive }) => {
-                                    return { boxShadow: isActive ? ' 0px 3px 0px 0px royalblue' : 'none'}
+                                    return { boxShadow: isActive ? "0px 3px 0px 0px royalblue" : "none"}
                                 }}
                                 to="/all-books"
                                 onClick={resetSearching}
@@ -103,7 +111,7 @@ const MainNavigation = () => {
                             <li>
                                 <NavLink
                                     style={({ isActive }) => {
-                                        return { boxShadow: isActive ? ' 0px 3px 0px 0px royalblue' : 'none'}
+                                        return { boxShadow: isActive ? "0px 3px 0px 0px royalblue" : "none"}
                                     }}
                                     to="/auth"
                                     onClick={resetSearching}
@@ -115,7 +123,7 @@ const MainNavigation = () => {
                                 <NavLink
                                     className="profile-link"
                                     style={({ isActive }) => {
-                                        return { boxShadow: isActive ? ' 0px 3px 0px 0px royalblue' : 'none'}
+                                        return { boxShadow: isActive ? "0px 3px 0px 0px royalblue" : "none"}
                                     }}
                                     to="/profile"
                                     onClick={resetSearching}
@@ -124,7 +132,7 @@ const MainNavigation = () => {
                                 </NavLink>
                             </li>
                         )}
-                        <Button>
+                        <Button className="header__cart-btn">
                             <ShoppingCartOutlinedIcon />
                         </Button>
                     </ul>
