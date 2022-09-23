@@ -1,0 +1,30 @@
+.searching-books-page-container {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 120px 0;
+}
+
+.searching-books-page-container .searching-books-container {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.searching-books-page-container h2 {
+    margin-bottom: 25px;
+}
+
+.searching-books-page-container h2 span:first-child {
+    color: royalblue;
+}
+
+@media screen and (max-width: 1200px) {
+    .searching-books-page-container {
+        width: 100%;
+        padding: 120px 10px 30px 10px;
+    }
+
+    .searching-books-container {
+        width: 100%;
+    }
+}

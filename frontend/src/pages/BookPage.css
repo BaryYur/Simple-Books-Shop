@@ -1,0 +1,76 @@
+.book-page-container {
+    padding: 100px 0 30px 0;
+}
+
+.book-page-container section {
+    width: 1000px;
+    margin: 40px auto;
+    padding: 15px;
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+    border-radius: 5px;
+    background-color: white;
+}
+
+.section-container .book-info-box {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.book-info-box__img-box {
+    display: flex;
+}
+
+.book-info-box p {
+    line-height: 25px;
+}
+
+.price-p {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 0;
+}
+
+.book-info-box__img-box img {
+    margin-right: 30px;
+}
+
+.accordion-box .accordion-title {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.desc-box {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 60%;
+}
+
+.book-info-box__btns {
+    /*border: 1px solid red;*/
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*width: 300px;*/
+}
+
+.book-info-box__btns button:first-child {
+    margin-right: 5px;
+}
+
+.book-info-box__btns button:first-child:hover {
+   background-color: rgba(205, 92, 92, 0.16);
+}
+
+.important-span {
+    color: royalblue;
+}
+
+@media screen and (max-width: 1200px) {
+    .book-page-container {
+        padding: 100px 10px 30px 10px;
+    }
+    .book-page-container section {
+        width: 100%;
+    }
+}

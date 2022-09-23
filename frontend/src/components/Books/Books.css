@@ -1,0 +1,36 @@
+.books-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.adventure-books-container,
+.science-books-container {
+    padding-top: 120px;
+    width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 30px;
+}
+
+.adventure-books-container h2,
+.science-books-container h2 {
+    margin-bottom: 25px;
+}
+
+.head-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 250px;
+}
+
+.circle {
+    margin-top: -10px;
+}
+
+@media screen and (max-width: 1200px) {
+    .adventure-books-container,
+    .science-books-container {
+        width: 100%;
+        padding: 120px 10px 30px 10px;
+    }
+}
