@@ -1,0 +1,125 @@
+.cart-items-container ul {
+    overflow-y: auto;
+    height: 500px;
+}
+
+.cart-items-container ul li {
+    border-radius: 4px;
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+    width: 99%;
+    margin: 8px 0;
+    padding: 8px;
+    min-height: 130px;
+    display: flex;
+    border: 1px solid lightgrey;
+    position: relative;
+    z-index: 10;
+}
+
+.cart-items-container ul::-webkit-scrollbar {
+    width: 5px;
+}
+
+.cart-items-container ul::-webkit-scrollbar-thumb {
+    background-color: #383838;
+    border-radius: 8px;
+}
+
+.cart-items-container ul li a {
+    display: flex;
+    color: black;
+    font-size: 14px;
+    width: 60%;
+    height: 60px;
+    position: relative;
+    z-index: 11;
+}
+
+.cart-items-container ul li a div {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.cart-items-container ul li a div p:first-child {
+    font-weight: bold;
+}
+
+.cart-items-container ul li a div p:last-child {
+    color: lightslategrey;
+    font-weight: 600;
+}
+
+.cart-items-container ul li a img {
+    width: 45px;
+    height: 60px;
+    margin-right: 10px;
+}
+
+.cart-items__price-box {
+    display: flex;
+    width: 40%;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-direction: column;
+
+}
+
+.price-box__price {
+    display: flex;
+    align-items: center;
+}
+
+.price-box__price p {
+    font-weight: 600;
+    margin: 0 7px;
+    font-size: 17px;
+}
+
+.price-box__price button {
+    padding: 5px 15px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1px solid royalblue;
+    border-radius: 3px;
+    background-color: white;
+    color: royalblue;
+    transition: all 0.2s ease-out;
+}
+
+.price-box__price button:hover {
+    color: white;
+    border-color: royalblue;
+    background-color:  royalblue;
+    transition: all 0.2s ease-out;
+}
+
+.price-box__order button {
+    padding: 5px 15px;
+    cursor: pointer;
+    border: 1px solid indianred;
+    border-radius: 3px;
+    background-color: indianred;
+    color: white;
+    transition: all 0.2s ease-out;
+}
+
+.price-box__order button:first-child:hover {
+    background-color: #ad2424;
+    border-color: #ad2424;
+    transition: all 0.2s ease-out;
+}
+
+.price-box__price .delete-cart-item-btn {
+    margin-left: 10px;
+    padding: 1px 5px;
+    border-color: grey;
+    color: grey;
+}
+
+.price-box__price .delete-cart-item-btn:hover {
+    border-color: indianred;
+    color: indianred;
+    background-color: white;
+}

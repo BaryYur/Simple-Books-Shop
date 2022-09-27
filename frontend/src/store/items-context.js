@@ -94,8 +94,15 @@ export const BookItemsContextProvider = (props) => {
     const addingToCartHandler = (id) => {
         for (let item of allItems) {
             if (item.id === id) {
+                let localItem = {
+                    ...item,
+                    counter: 1,
+                    basicPrice: item.saleInfo.retailPrice ? (item.saleInfo.retailPrice.amount / 10).toString().split(".")[0] : 100,
+                    price: item.saleInfo.retailPrice ? (item.saleInfo.retailPrice.amount / 10).toString().split(".")[0] : 100
+                }
+
                 setCartItems(prevItems => {
-                    return [...prevItems, item];
+                    return [...prevItems, localItem];
                 })
             }
         }

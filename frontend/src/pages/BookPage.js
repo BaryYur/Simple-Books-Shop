@@ -1,8 +1,8 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 
-import {useNavigate, useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import BookItemsContext from "../store/items-context";
-import AuthContext from "../store/auth-context";
+// import AuthContext from "../store/auth-context";
 
 import {Accordion, AccordionDetails, AccordionSummary, Button, Typography} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -15,11 +15,15 @@ const BookPage = () => {
     const params = useParams();
     const [chosenBook, setChosenBook] = useState(null);
     const booksCtx = useContext(BookItemsContext);
-    const authCtx = useContext(AuthContext);
-    const navigate = useNavigate();
+    // const authCtx = useContext(AuthContext);
+    // const navigate = useNavigate();
     const itemId = JSON.parse(localStorage.getItem("chosenBook")).id + "-local" || "";
     const [liked, setLiked] = useState(booksCtx.isLiked(itemId));
-    // const [liked, setLiked] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(true);
+    const [disabled, setDisabled] = useState(false);
+
+    const cart = JSON.parse(localStorage.getItem("cartItems"));
+    const local = JSON.parse(localStorage.getItem("localItems"));
 
     useEffect(() => {
         for (let item of booksCtx.bookItems) {
@@ -28,33 +32,29 @@ const BookPage = () => {
             }
         }
 
-        // if (JSON.parse(localStorage.getItem("localItems")).includes(itemId + "-local")) {
-        //     setLiked(true);
-        // } else {
-        //     setLiked(false);
-        // }
-
         setChosenBook(JSON.parse(localStorage.getItem("chosenBook")));
+
+        for (let i = 0, j = 0; i < cart.length, j < local.length; i++, j++) {
+            if ((cart[i] && cart[i].id) === local[j].replace("-local", "")) {
+                setDisabled(true);
+            }
+        }
     }, [params.id, booksCtx.bookItems])
 
     const likeItemHandler = (id) => {
-        if (authCtx.isLoggedIn === false) {
-            navigate("/auth");
-        } else {
             booksCtx.likeHandler(id);
             setLiked(booksCtx.isLiked(id));
-            // if (JSON.parse(localStorage.getItem("localItems")).includes(itemId + "-local")) {
-            //     setLiked(true);
-            // } else {
-            //     setLiked(false);
-            // }
-        }
     }
-
-    const [isExpanded, setIsExpanded] = useState(true);
 
     const expandedHandler = () => {
         setIsExpanded(active => !active);
+    }
+
+    const addingToCart = (id) => {
+        if (!booksCtx.cartItems.includes(id)) {
+            booksCtx.addingToCart(id);
+            setDisabled(true);
+        }
     }
 
     return (
@@ -67,24 +67,30 @@ const BookPage = () => {
                                 <img alt="book-img" style={{ border: "1px solid grey" }} src={chosenBook.volumeInfo.imageLinks.thumbnail} />
                                 <div className="desc-box">
                                      <div>
-                                        <h3>{chosenBook.volumeInfo.title}</h3>
-                                        <p>
+                                         <h3>{chosenBook.volumeInfo.title}</h3>
+                                         <p>
                                             <span>Authors: </span>
                                             {chosenBook.volumeInfo.authors ? chosenBook.volumeInfo.authors.map(author => (
                                                 <span className="important-span" key={Math.random()}>{author}, </span>
                                             )) : <span>No authors</span>}
-                                        </p>
-                                        <p>Country ({chosenBook.saleInfo.country})</p>
-                                        <p>
+                                         </p>
+                                         <p>Country ({chosenBook.saleInfo.country})</p>
+                                         <p>
                                             <span>Categories: </span>
                                             {chosenBook.volumeInfo.categories.map(category => (
                                                 <span className="important-span"  key={Math.random().toString()}>{category}</span>
                                             ))}
-                                        </p>
+                                         </p>
+                                         <p>
+                                             Pages: <span>{chosenBook.volumeInfo.pageCount && <span>{chosenBook.volumeInfo.pageCount} pages</span>}</span>
+                                         </p>
                                     </div>
                                     <p className="price-p">
                                         <span>Price: </span>
-                                        <span>{chosenBook.saleInfo.listPrice ? chosenBook.saleInfo.listPrice.amount : 0}UAH</span>
+                                        <span>
+                                            {chosenBook.saleInfo.listPrice ?
+                                            (chosenBook.saleInfo.listPrice.amount / 10).toString().split(".")[0] : 100}UAH
+                                        </span>
                                     </p>
                                 </div>
                             </div>
@@ -99,7 +105,16 @@ const BookPage = () => {
                                 >
                                     {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                                 </Button>
-                                <Button variant="contained">Add to cart</Button>
+                                <Button
+                                    variant="contained"
+                                    id={chosenBook.id}
+                                    size="small"
+                                    variant="contained"
+                                    onClick={() => addingToCart(chosenBook.id)}
+                                    disabled={disabled}
+                                >
+                                    Add to cart
+                                </Button>
                             </div>
                         </div>
                         <div className="description-container">

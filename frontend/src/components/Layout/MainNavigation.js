@@ -1,7 +1,7 @@
 import {useContext, useEffect, useState} from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 
-import AuthContext from "../../store/auth-context";
+// import AuthContext from "../../store/auth-context";
 import "./MainNavigation.css";
 import ImportContactsOutlinedIcon from '@mui/icons-material/ImportContactsOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
@@ -9,13 +9,12 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import BookItemsContext from "../../store/items-context";
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import ShoppingCart from "../cart/ShoppingCart";
+import ShoppingCart from "../Cart/ShoppingCart";
 
 const MainNavigation = () => {
-    const authCtx = useContext(AuthContext);
+    // const authCtx = useContext(AuthContext);
     const booksCtx = useContext(BookItemsContext);
-    const isLoggedIn = authCtx.isLoggedIn;
+    // const isLoggedIn = authCtx.isLoggedIn;
     const navigate = useNavigate();
     const [searchingInput, setSearchingInput] = useState("");
 
@@ -107,31 +106,31 @@ const MainNavigation = () => {
                                 onClick={resetSearching}
                             >All books</NavLink>
                         </li>
-                        {!isLoggedIn && (
-                            <li>
-                                <NavLink
-                                    style={({ isActive }) => {
-                                        return { boxShadow: isActive ? "0px 3px 0px 0px royalblue" : "none"}
-                                    }}
-                                    to="/auth"
-                                    onClick={resetSearching}
-                                >Login</NavLink>
-                            </li>
-                        )}
-                        {isLoggedIn && (
-                            <li>
-                                <NavLink
-                                    className="profile-link"
-                                    style={({ isActive }) => {
-                                        return { boxShadow: isActive ? "0px 3px 0px 0px royalblue" : "none"}
-                                    }}
-                                    to="/profile"
-                                    onClick={resetSearching}
-                                >
-                                    <PersonOutlineOutlinedIcon />
-                                </NavLink>
-                            </li>
-                        )}
+                        {/*{!isLoggedIn && (*/}
+                        {/*    <li>*/}
+                        {/*        <NavLink*/}
+                        {/*            style={({ isActive }) => {*/}
+                        {/*                return { boxShadow: isActive ? "0px 3px 0px 0px royalblue" : "none"}*/}
+                        {/*            }}*/}
+                        {/*            to="/auth"*/}
+                        {/*            onClick={resetSearching}*/}
+                        {/*        >Login</NavLink>*/}
+                        {/*    </li>*/}
+                        {/*)}*/}
+                        {/*{isLoggedIn && (*/}
+                        {/*    <li>*/}
+                        {/*        <NavLink*/}
+                        {/*            className="profile-link"*/}
+                        {/*            style={({ isActive }) => {*/}
+                        {/*                return { boxShadow: isActive ? "0px 3px 0px 0px royalblue" : "none"}*/}
+                        {/*            }}*/}
+                        {/*            to="/profile"*/}
+                        {/*            onClick={resetSearching}*/}
+                        {/*        >*/}
+                        {/*            <PersonOutlineOutlinedIcon />*/}
+                        {/*        </NavLink>*/}
+                        {/*    </li>*/}
+                        {/*)}*/}
                         <Button onClick={booksCtx.openingCartHandler} className="header__cart-btn">
                             <ShoppingCartOutlinedIcon />
                         </Button>
